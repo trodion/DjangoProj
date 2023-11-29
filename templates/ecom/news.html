@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Интернет-магазин RockShop</title>
+  <style media="screen">
+    .footer{
+      position: fixed;
+    }
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    ul li {
+	  border-bottom: 1px solid #ccc;
+    }
+  </style>
+</head>
+
+<body style="background-color:#f7f7f7;">
+  {%if request.user.is_authenticated%}
+    {% include "ecom/customer_navbar.html" %}
+  {%else%}
+    {% include "ecom/navbar.html" %}
+  {%endif%}
+  <br><br><br>
+<h3 style="text-align:center;">
+  <ul>
+    {% for p in posts %}
+      <li>
+        <h2>{{ p.title }}</h2>
+        <p>{{ p.content }}</p>
+        <br>
+      </li>
+    {% endfor %}
+  </ul>
+</h3>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  {% include "ecom/footer.html" %}
+</body>
+<!--
+developed By : sumit kumar
+-->
+
+</html>

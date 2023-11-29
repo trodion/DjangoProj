@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Интернет-магазин RockShop</title>
+
+
+</head>
+
+<body style="background-color: #B3E5FC;">
+  {%if request.user.is_authenticated%}
+    {% include "ecom/customer_navbar.html" %}
+  {%else%}
+    {% include "ecom/navbar.html" %}
+  {%endif%}
+
+  <center>
+  <style>
+   li {
+    list-style-type: none; /* Убираем маркеры */
+   }
+  </style>
+  <h2>Наши реквизиты: </h2>
+  <ul>
+    <li>Телефон/факс: (495) 739-22-23</li>
+    <li>ООО «ПМ-ПЛЮС»</li>
+    <li>ИНН: 7734345178</li>
+    <li>КПП: 771401001</li>
+    <li>Юридический адрес: 123007, Москва, 2й Хорошевский проезд д.7, стр.14, этаж 3, пом.VIII, комн.321</li>
+  </ul>
+  <hr color="black">
+
+    <h3 class='alert alert-success'>Присылайте нам свои отзывы!</h3>
+    <form method="POST">
+      <!-- Very Important csrf Token -->
+      {% csrf_token %}
+      <div class="form-group">
+        <p>
+        <h3>{{ form.as_p }}</h3>
+        </p>
+        <br>
+        <input type="submit" value="Отправить" class='btn btn-primary btn-lg'>
+      </div>
+    </form>
+  </center>
+  {% include "ecom/footer.html" %}
+</body>
+<!--
+developed By : sumit kumar
+-->
+
+</html>

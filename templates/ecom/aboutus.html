@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+
+
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Интернет-магазин RockShop</title>
+  <style media="screen">
+    .footer{
+      position: fixed;
+    }
+  </style>
+</head>
+
+<body style="background-color:#f7f7f7;">
+  {%if request.user.is_authenticated%}
+    {% include "ecom/customer_navbar.html" %}
+  {%else%}
+    {% include "ecom/navbar.html" %}
+  {%endif%}
+  <br><br><br>
+<h3 style="text-align:center;">
+  <style>
+   li {
+    list-style-type: none; /* Убираем маркеры */
+   }
+  </style>
+  <ul>
+    <li><a href=https://pop-music.ru/>POP-MUSIC  </a><img src="{% static "images/pop-music.jpg" %}" width="100" height ="100"/></li>
+    <li><a href=https://www.muztorg.ru/>MUZTORG  </a><img src="{% static "images/muztorg.jpg" %}" width="200" height ="90"/></li>
+    <li><a href=https://gitaraclub.ru/>Guitar Club  </a><img src="{% static "images/club.jpg" %}" width="100" height ="100"/></li>
+  </ul>
+  <hr color="black">
+RockShop – экосистема для музыкантов, лидер среди розничных сетей по продаже музыкальных инструментов в России
+Мы – экосистема для музыкантов и крупнейшая сеть из 49 музыкальных магазинов в России, RockShop - интернет-магазин №1 по популярности в данном сегменте в Рунете*.
+У нас представлен широкий ассортимент товаров для начинающих и профессиональных музыкантов, звукорежиссеров и продюсеров, владельцев бизнесов. А также удобные сервисы и услуги: возможность продать б/у инструмент на сайте, репетиционные базы, музыкальные курсы, аренда и настройка инструментов, рассрочка и кредит, доставка, сервисные центры. Компания - официальный дилер 600 мировых брендов Yamaha, Fender, Ibanez, Gibson, Marshall, Casio, AKG, Shure, Korg, Numark, Pioneer, Tamа, Zildjian, Mackie, JBL и других.
+Музторг работает для своих покупателей более 20 лет. Компания первой на российском рынке музыкальных инструментов реализовала омниканальный подход: в магазинах и онлайн для покупателей всегда единые цены, ассортимент и сервис.
+
+</h3>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  {% include "ecom/footer.html" %}
+</body>
+<!--
+developed By : sumit kumar
+-->
+
+</html>

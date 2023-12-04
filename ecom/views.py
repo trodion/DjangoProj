@@ -1,11 +1,16 @@
 from django.shortcuts import render,redirect,reverse
+from django.utils.datetime_safe import datetime
+
 from . import forms, models
-from django.http import HttpResponseRedirect,HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpRequest
 from django.core.mail import send_mail
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.contrib import messages
 from django.conf import settings
+from .models import Comment
+from .forms import CommentForm
+
 
 def home_view(request):
     products=models.Product.objects.all()
@@ -567,6 +572,27 @@ def news(request):
     return render(request, 'ecom/news.html', {'posts': posts})
 
 
+def blogpost(request, parametr):
+    """Renders the blogpost page."""
+    assert isinstance(request, HttpRequest)
+    post_1 = models.News.objects.get(id=parametr)
+    comments = Comment.objects.filter(post=parametr)
+
+    if request.method == "POST":  # после отправки данных формы на сервер методом POST
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment_f = form.save(commit=False)
+            comment_f.author = request.user  # добавляем (так как этого поля нет в форме) в модель Комментария (Comment) в поле автор авторизованного пользователя
+            comment_f.date = datetime.now()
+            comment_f.post = models.News.objects.get(id=parametr)
+            comment_f.save()  # сохраняем изменения после добавления полей
+            return redirect('blogpost', parametr=post_1.id)  # переадресация на ту же страницу статьи после отправки комментария
+    else:
+        form = CommentForm()  # создание формы для ввода комментария
+    return render(request, 'ecom/blogpost.html', {'post_1': post_1, 'comments': comments, 'form': form})
+
+
+
 def contactus_view(request):
     sub = forms.ContactusForm()
     if request.method == 'POST':
@@ -578,3 +604,34 @@ def contactus_view(request):
             send_mail(str(name)+' || '+str(email),message, settings.EMAIL_HOST_USER, settings.EMAIL_RECEIVING_USER, fail_silently = False)
             return render(request, 'ecom/contactussuccess.html')
     return render(request, 'ecom/contactus.html', {'form':sub})
+
+
+def information(request):
+    assert isinstance(request, HttpRequest)
+    data = None
+    gender = {'1', 'Мужской', '2', 'Женский'}
+    if request.method == 'POST':
+        form = forms.InformationForm(request.POST)
+        if form.is_valid():
+            data = dict()
+            data['name'] = form.cleaned_data['name']
+            data['city'] = form.cleaned_data['city']
+            data['job'] = form.cleaned_data['job']
+            data['gender'] = form.cleaned_data['gender']
+            if(form.cleaned_data['notice'] == True):
+                data['notice'] = 'Да'
+            else:
+                data['notice'] = 'Нет'
+            data['email'] = form.cleaned_data['email']
+            data['message'] = form.cleaned_data['message']
+            form = None
+    else:
+        form = forms.InformationForm()
+    return render(
+        request,
+        'ecom/Information.html',
+        {
+            'form': form,
+            'data': data
+        }
+    )

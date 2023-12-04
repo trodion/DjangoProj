@@ -1,0 +1,31 @@
+{% extends "ecom/homebase.html" %}
+
+{% block content %}
+
+<h2 style="text-align: center;"> {{post_1.title}} </h2>
+
+<img src="{{ post_1.image.url }}" alt=""/>
+
+<br>
+<p align="justify">{{post_1.content|linebreaksbr}}</p>
+
+{% if user.is_authenticated %}
+    <h3 style="margin:0px 0px 0px 25px;">Добавить комментарий</h3>
+    <form method="POST" >{% csrf_token %} {# защита от атак CSRF#}
+    <div>
+        {{form.as_p}}
+        <button type="submit" class="save btn btn-default" style="margin:0px 0px 0px 25px;"> Отправить комментарий </button>
+    </div>
+    </form>
+{% else %}
+    <h3> Для добавления своего комментария, пожалуйста, авторизуйтесь </h3>
+{% endif %}
+
+{% for comment in comments %}
+    <hr/>
+    <h7 style="margin:0px 0px 0px 25px; "> {{comment.date}} </h7>
+    <h5 style="margin:0px 0px 0px 25px; color:blue;"> {{comment.author}} </h5>
+<h6 style="margin:0px 0px 0px 25px;"> <i>{{comment.text|linebreaksbr}} </i></h6>
+{% endfor %}
+
+{% endblock %}

@@ -1,5 +1,8 @@
+from datetime import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
+
 
 
 class Customer(models.Model):
@@ -53,7 +56,24 @@ class Feedback(models.Model):
 class News(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True)
+    image = models.ImageField(default='/images/pop-music.jpg', null=True, blank=True, verbose_name='Картинка')
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=True)
+
+
+class Comment(models.Model):
+    text = models.TextField(verbose_name="Текст комментария")
+    date = models.DateTimeField(default=datetime.now(), db_index=True, verbose_name="Дата написания")
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор комментария")
+    post = models.ForeignKey(News, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return 'Комментарий %d %s к %s' % (self.id, self.author, self.post)
+
+    class Meta:
+        db_table = "Comment"
+        ordering = ["-date"]
+        verbose_name = "Комментарий"
+        verbose_name_plural = "Комментарии"
 

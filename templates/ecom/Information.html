@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Интернет-магазин RockShop</title>
+    <style media="screen">
+      body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    /* background: linear-gradient(to right, #b92b27, #1565c0) */
+}
+
+.box {
+    width: 100%;
+    padding: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: #3E454C;
+    text-align: center;
+    transition: 0.25s;
+    margin-top: 100px;
+    border-radius: 50px;
+}
+
+.box input[type="text"],
+.box input[type="password"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #ffffff;
+    padding: 10px 10px;
+    width: 250px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s
+}
+
+.box h1 {
+    color: white;
+    /* text-transform: uppercase; */
+    font-weight: 500
+}
+
+.box input[type="text"]:focus,
+.box input[type="password"]:focus {
+    width: 300px;
+    border-color: #d3d3d3
+}
+
+.box input[type="submit"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #2ecc71;
+    padding: 14px 40px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer
+}
+
+.box input[type="submit"]:hover {
+    background: #2ecc71
+}
+
+.forgot {
+    text-decoration: underline
+}
+
+ul.social-network {
+    list-style: none;
+    display: inline;
+    margin-left: 0 !important;
+    padding: 0
+}
+
+ul.social-network li {
+    display: inline;
+    margin: 0 5px
+}
+
+.social-network a.icoFacebook:hover {
+    background-color: #3B5998
+}
+
+.social-network a.icoTwitter:hover {
+    background-color: #33ccff
+}
+
+.social-network a.icoGoogle:hover {
+    background-color: #BD3518
+}
+
+.social-network a.icoFacebook:hover i,
+.social-network a.icoTwitter:hover i,
+.social-network a.icoGoogle:hover i {
+    color: #fff
+}
+
+a.socialIcon:hover,
+.socialHoverClass {
+    color: #44BCDD
+}
+
+.social-circle li a {
+    display: inline-block;
+    position: relative;
+    margin: 0 auto 0 auto;
+    border-radius: 50%;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    font-size: 20px
+}
+
+.social-circle li i {
+    margin: 0;
+    line-height: 50px;
+    text-align: center
+}
+
+.social-circle li a:hover i,
+.triggeredHover {
+    transform: rotate(360deg);
+    transition: all 0.2s
+}
+
+.social-circle i {
+    color: #fff;
+    transition: all 0.8s;
+    transition: all 0.8s
+}
+
+ul {
+    list-style-type: none;
+}
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+    color: white;
+    font-size: 20px
+}
+
+p {
+    margin: 0 0 10px;
+    font-size: 15px;
+    color: white;
+}
+</style>
+
+  </head>
+  <body>
+    {% include "ecom/navbar.html" %}
+    {% if form != None %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <form class="box" method="post">
+                        {% csrf_token %}
+                        <h1>Отправьте пожалуйста заполненную анкету</h1>
+                        {% render_field form.name class="form-control" placeholder="Имя" %}
+                        {% render_field form.city class="form-control" placeholder="Город" %}
+                        {% render_field form.job class="form-control" placeholder="Работа" %}
+                        {% render_field form.gender class="form-select" placeholder="Пол" %}
+                        <p>Получать новости с сайна на email:
+                        {% render_field form.notice class="form-select" placeholder="Пол" %}</p>
+                        {% render_field form.email class="form-control" placeholder="email" %}
+                        {% render_field form.message class="form-control" placeholder="О себе" %}
+                        <input type="submit" name="" value="Отправить" >
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <br><h2>Благодарим за предоставленную информацию</h2>
+    <h3>Вы сообщили о себе следующее:</h3>
+    <ul>
+        <li><span>Имя: </span> {{ data.name }}<li />
+        <li><span>Город: </span> {{ data.city }}<li />
+        <li><span>Пол: </span> {{ data.gender }}<li />
+        <li><span>Работа: </span> {{ data.job }}<li />
+        <li><span>В интернете: </span> {{ data.internet }}<li />
+        <li><span>Получать новости с сайта: </span> {{ data.notice }}<li />
+        <li><span>Ваша почта: </span> {{ data.email }}<li />
+        <li><span>Информация о себе: </span> {{ data.message }}<li />
+    <</ul>
+    {% endif %}
+
+<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br>
+{% include "ecom/footer.html" %}
+  </body>
+</html>
+

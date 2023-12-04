@@ -9,13 +9,23 @@ Youtube :youtube.com/lazycoders
 from django.contrib import admin
 from django.urls import path
 from ecom import views
-from django.contrib.auth.views import LoginView,LogoutView
+from django.contrib.auth.views import LoginView, LogoutView
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home_view,name=''),
     path('catalog/', views.catalog, name='catalog'),
     path('feedback/', views.feedback, name='feedback'),
     path('news/', views.news, name='news'),
+
+    path('news/<int:parametr>/', views.blogpost, name='blogpost'),
+
+    path('inf/', views.information, name='inf'),
+
     path('afterlogin', views.afterlogin_view,name='afterlogin'),
     path('logout', LogoutView.as_view(template_name='ecom/logout.html'),name='logout'),
     path('aboutus', views.aboutus_view),
@@ -57,6 +67,4 @@ urlpatterns = [
     path('remove-from-cart/<int:pk>', views.remove_from_cart_view,name='remove-from-cart'),
     path('customer-address', views.customer_address_view,name='customer-address'),
     path('payment-success', views.payment_success_view,name='payment-success'),
-
-
 ]

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Customer,Product,Orders,Feedback, News
+from .models import Customer,Product,Orders,Feedback, News, Comment
 # Register your models here.
 class CustomerAdmin(admin.ModelAdmin):
     pass
@@ -21,3 +21,6 @@ class NewsAdmin(admin.ModelAdmin):
     pass
 admin.site.register(News, FeedbackAdmin)
 # Register your models here.
+
+
+admin.site.register(Comment)

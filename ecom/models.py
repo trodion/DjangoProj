@@ -56,7 +56,7 @@ class Feedback(models.Model):
 class News(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True)
-    image = models.ImageField(default='/images/pop-music.jpg', null=True, blank=True, verbose_name='Картинка')
+    image = models.ImageField(upload_to='news_image/', null=True, blank=True, verbose_name='Картинка')
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=True)

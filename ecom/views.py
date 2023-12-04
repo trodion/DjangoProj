@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from django.contrib import messages
 from django.conf import settings
 from .models import Comment
-from .forms import CommentForm
+from .forms import CommentForm, NewsForm
 
 
 def home_view(request):
@@ -635,3 +635,21 @@ def information(request):
             'data': data
         }
     )
+
+
+def videopost(request):
+    return render(request, 'ecom/videopost.html')
+
+
+def newpost(request):
+    if request.method == "POST":
+        newsform = NewsForm(request.POST, request.FILES)
+        if newsform.is_valid():
+            blog_f = newsform.save(commit=False)
+            blog_f.time_create = datetime.now()
+            blog_f.save()
+            return redirect('')
+    else:
+        newsform = NewsForm()
+
+    return render(request, 'ecom/newpost.html', {'newsform': newsform})
